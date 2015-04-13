@@ -1,22 +1,39 @@
 ﻿namespace CacheBusting.Tests
 {
-    using CacheBusting.Tests.Fakes;
+    using CacheBusting.FingerPrinting;
+
+    using FakeItEasy;
 
     using NUnit.Framework;
 
     [TestFixture]
     public class FingerPrinterTests
     {
-        [TestCase("main.css", "1337", true, Result = "main.css?v=1337")]
-        [TestCase("main.css?", "1337", true, Result = "main.css?&v=1337")]
-        [TestCase("main.css?a=b", "1337", true, Result = "main.css?a=b&v=1337")]
-        [TestCase("main.css", "1337", false, Result = "main.1337.css")]
-        [TestCase("main.min.css", "1337", false, Result = "main.min.1337.css")]
-        public string FingerPrint(string url, string fingerprint, bool useQueryString)
-        {
-            var fingerprinter = new FakeFingerPrinter(fingerprint);
+        private IFingerPrintGenerator fingerPrintGenerator;
 
-            return fingerprinter.FingerPrint(url, useQueryString);
+        [TestFixtureSetUp]
+        public void SetUpFixture()
+        {
+            this.fingerPrintGenerator = A.Fake<IFingerPrintGenerator>();
+            A.CallTo(() => this.fingerPrintGenerator.CreateFingerPrint(A<string>.Ignored)).Returns("1337");
+        }
+
+        [TestCase("main.css", true, Result = "main.css?v=1337")]
+        [TestCase("main.css?", true, Result = "main.css?&v=1337")]
+        [TestCase("main.css?a=b", true, Result = "main.css?a=b&v=1337")]
+        [TestCase("main.css", false, Result = "main.1337.css")]
+        [TestCase("main.min.css", false, Result = "main.min.1337.css")]
+        [TestCase("main", true, Result = "main?v=1337")]
+        [TestCase("main/", true, Result = "main/?v=1337")]
+        [TestCase("/main", true, Result = "/main?v=1337")]
+        [TestCase("main", false, Result = "main/1337")]
+        [TestCase("main/", false, Result = "main/1337")]
+        [TestCase("/main", false, Result = "/main/1337")]
+        public string FingerPrint(string url, bool useQueryString)
+        {
+            var fingerprinter = new FingerPrinter(this.fingerPrintGenerator, useQueryString);
+
+            return fingerprinter.FingerPrint(url);
         }
     }
 }

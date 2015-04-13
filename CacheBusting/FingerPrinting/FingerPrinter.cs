@@ -1,34 +1,36 @@
 ﻿namespace CacheBusting.FingerPrinting
 {
-    public abstract class FingerPrinter
+    public class FingerPrinter
     {
-        public string FingerPrint(string filepath, bool useQueryString = true)
+        private readonly IFingerPrintGenerator generator;
+
+        private readonly bool useQueryString;
+
+        public FingerPrinter(IFingerPrintGenerator generator, bool useQueryString)
         {
-            return this.InjectFingerPrinting(filepath, this.CreateFingerPrint(filepath), useQueryString);
+            this.generator = generator;
+            this.useQueryString = useQueryString;
         }
 
-        protected abstract string CreateFingerPrint(string filepath);
-
-        protected virtual string InjectFingerPrinting(string url, string fingerprint, bool useQueryString = true)
+        public virtual string FingerPrint(string url)
         {
-            if (useQueryString)
+            var fingerprint = this.generator.CreateFingerPrint(url);
+
+            if (this.useQueryString)
             {
                 url = string.Concat(url, url.Contains("?") ? "&" : "?", "v=", fingerprint);
             }
             else
             {
                 int index = url.LastIndexOf('.');
-                if (index != -1)
-                {
-                    url = url.Insert(index, "." + fingerprint);
-                }
-                else
-                {
-                    url = string.Concat(url, "/", fingerprint);
-                }
+                url = index != -1 
+                    ? url.Insert(index, "." + fingerprint) 
+                    : url.EndsWith("/") 
+                        ? string.Concat(url, fingerprint)
+                        : string.Concat(url, "/", fingerprint);
             }
 
             return url;
-        }        
+        }
     }
 }

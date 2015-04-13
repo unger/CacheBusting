@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CacheBusting</RootNamespace>
     <AssemblyName>CacheBusting</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +33,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Abstractions">
+      <HintPath>..\packages\System.IO.Abstractions.2.0.0.113\lib\net40\System.IO.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,13 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\FileSystem.cs" />
-    <Compile Include="Abstractions\IFileSystem.cs" />
+    <Compile Include="Abstractions\IPathMapper.cs" />
+    <Compile Include="Abstractions\PathMapper.cs" />
     <Compile Include="FingerPrint.cs" />
-    <Compile Include="FingerPrinting\ContentHashFingerPrinter.cs" />
-    <Compile Include="FingerPrinting\FileDateFingerPrinter.cs" />
+    <Compile Include="FingerPrinting\ContentHashFingerPrintGenerator.cs" />
+    <Compile Include="FingerPrinting\FileDateFingerPrintGenerator.cs" />
     <Compile Include="FingerPrinting\FingerPrinter.cs" />
+    <Compile Include="FingerPrinting\IFingerPrintGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
