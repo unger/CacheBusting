@@ -1,2 +1,2 @@
 # CacheBusting
-Tools to fingerprint urls to static resources
+Helpers to fingerprint urls to static resources
