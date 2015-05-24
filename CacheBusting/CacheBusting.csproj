@@ -50,7 +50,7 @@
     <Compile Include="FingerPrinting\ContentHashFingerPrintGenerator.cs" />
     <Compile Include="FingerPrinting\FileDateFingerPrintGenerator.cs" />
     <Compile Include="FingerPrinting\FingerPrinter.cs" />
-    <Compile Include="FingerPrinting\IFingerPrintGenerator.cs" />
+    <Compile Include="Abstractions\IFingerPrintGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

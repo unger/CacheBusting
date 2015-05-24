@@ -1,5 +1,6 @@
 ﻿namespace CacheBusting.Tests
 {
+    using CacheBusting.Abstractions;
     using CacheBusting.FingerPrinting;
 
     using FakeItEasy;

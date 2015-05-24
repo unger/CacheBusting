@@ -35,10 +35,10 @@ You can use the IIS Url Rewrite Module, that can be installed with the Web platf
       <rewrite>
         <rules>
           <rule name="Cachebusting">
+            <match url="^(.+)\.\d+(\.(js|css|png|jpg|gif)$)" />
             <conditions>
               <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
             </conditions>
-            <match url="^(.+)\.\d+(\.(js|css|png|jpg|gif)$)" />
             <action type="Rewrite" url="{R:1}{R:2}" />
           </rule>
         </rules>

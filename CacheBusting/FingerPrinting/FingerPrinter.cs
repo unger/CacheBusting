@@ -1,5 +1,7 @@
 ﻿namespace CacheBusting.FingerPrinting
 {
+    using CacheBusting.Abstractions;
+
     public class FingerPrinter
     {
         private readonly IFingerPrintGenerator generator;

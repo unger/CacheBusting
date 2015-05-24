@@ -1,4 +1,4 @@
-﻿namespace CacheBusting.FingerPrinting
+﻿namespace CacheBusting.Abstractions
 {
     public interface IFingerPrintGenerator
     {
