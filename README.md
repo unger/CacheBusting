@@ -29,12 +29,15 @@ Will render the following
 
 ##Url rewriting
 
-You can use the IIS Url Rewrite Module, that can be installed with the Web platform Installer. Then configure with this config to make the above urls work. (Example from Html5boilerplate IIS server config)
+You can use the IIS Url Rewrite Module, that can be installed with the Web platform Installer. Then configure with this config to make the above urls work. (Example from Html5boilerplate IIS server config, with added file exists check)
 
     <system.webServer>
       <rewrite>
         <rules>
           <rule name="Cachebusting">
+            <conditions>
+              <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            </conditions>
             <match url="^(.+)\.\d+(\.(js|css|png|jpg|gif)$)" />
             <action type="Rewrite" url="{R:1}{R:2}" />
           </rule>

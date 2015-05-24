@@ -6,8 +6,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="<%= FingerPrint.WithFileDate("/css/main.css") %>" rel="stylesheet"/>
-    <link href="<%= FingerPrint.WithContentHash("/css/main.css") %>" rel="stylesheet"/>
+    <link href="<%= FingerPrint.WithFileDate("/css/main.css", false) %>" rel="stylesheet"/>
+    <link href="/css/main.1.3.4.css" rel="stylesheet"/>
 </head>
 <body>
     <h1>
