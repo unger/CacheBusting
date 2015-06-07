@@ -45,3 +45,6 @@ You can use the IIS Url Rewrite Module, that can be installed with the Web platf
       </rewrite>
     </system.webServer>
 
+If you also deliver resources with virtual paths that does not exist on disk you can get trouble with the above rewrite rule, to make it compatible you can change the match regexp to only match exactly 12 numerics.
+
+    <match url="^(.+)\.\d{12}(\.(js|css|png|jpg|gif)$)" />
